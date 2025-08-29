@@ -1,0 +1,118 @@
+# 🔐 AES-128 in OFB Mode — Symmetric Cryptography Project
+
+This project implements AES-128 encryption and decryption in **Output Feedback (OFB)** mode using the official specification from **FIPS PUB 197** and **NIST SP 800-38A**. It supports file-based encryption/decryption and has been validated against official NIST test vectors.
+
+---
+
+## 📁 Project Structure
+
+```
+Final-Project/
+├── include/             # Header files
+│   ├── aes128e.h        # AES-128 core header
+│   ├── obf.h            # OFB mode header
+│
+├── src/                 # Source files
+│   ├── aes128e.c        # AES-128 encryption implementation
+│   ├── obf.c            # OFB mode logic
+│   ├── main.c           # Main CLI program
+│
+├── test/                # Tests
+│   └── nist_test.c      # Validation against official test vectors
+│
+├── data/                # Input/Output samples
+│   ├── plaintext.txt
+│   ├── encrypted.bin
+│   ├── decrypted.txt
+│   ├── key.bin
+│   └── iv.bin
+│
+├── Makefile             # Build automation
+└── README               # Project documentation (this file)
+```
+
+---
+
+## 🔧 Build Instructions
+
+Make sure you have GCC or Clang installed. Then run:
+
+```bash
+make
+```
+
+This will build two binaries:
+- `aes_ofb`: for encrypting and decrypting files
+- `nist_test`: for validating correctness using official test vectors
+
+---
+
+## 🚀 How to Use
+
+### 🔐 Encrypt a file:
+
+```bash
+./aes_ofb -e <input_plaintext_file> <output_cipher_file> <key_file> <iv_file>
+```
+
+### 🔓 Decrypt a file:
+
+```bash
+./aes_ofb -d <input_cipher_file> <output_plaintext_file> <key_file> <iv_file>
+```
+
+📌 **Note:** The key and IV must be 16 bytes long (128 bits).
+
+---
+
+## ✅ Validation
+
+This implementation has been verified using:
+- **FIPS 197 AES core test vectors**
+- **NIST SP 800-38A OFB mode vectors** (Section F.4.1 and F.4.2)
+
+Run:
+
+```bash
+./nist_test
+```
+
+If correct, you will see:
+```
+✅ NIST test vector passed.
+```
+
+---
+
+## 📚 Literature Review (Sources)
+
+1. **FIPS PUB 197** – *Advanced Encryption Standard (AES)*  
+   Link: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197.pdf
+
+2. **NIST SP 800-38A** – *Recommendation for Block Cipher Modes of Operation*  
+   Link: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf
+
+3. **FIPS PUB 140-3** – *Security Requirements for Cryptographic Modules*  
+   Link: https://csrc.nist.gov/publications/detail/fips/140/3/final
+
+4. **"The Design of Rijndael" by Daemen and Rijmen**  
+   Describes the AES cipher chosen by NIST, including rationale and structure.
+
+5. **“Security of the OFB Mode” – Research article or analysis of OFB vulnerability/resilience**  
+   (You can find and cite a paper such as: [Security of CBC, CFB, OFB Modes](https://www.researchgate.net/publication/261559073))
+
+---
+
+## 🧠 Key Concepts
+
+- **AES-128**: A symmetric cipher with 128-bit key size and 10 rounds.
+- **OFB Mode**: Converts a block cipher into a stream cipher by feeding the output of AES into the next block, XORed with plaintext/ciphertext.
+- **No Padding Required**: OFB works with arbitrary-length messages.
+
+---
+
+## 🛡️ Error Handling
+
+- Proper checks on file input/output.
+- Validation for key and IV length.
+- Meaningful usage instructions if command-line args are missing.
